@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">CRUD with SQLite</string>
+    <string name="Home">Home</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="date">Date of Birth</string>
+    <string name="male">Male</string>
+    <string name="Female">Female</string>
+    <string name="add">Add</string>
+    <string name="update">Update Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="search">Search</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
