@@ -10,7 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CRUDWithSQLite">
         <activity
-            android:name=".MainActivity"
+            android:name=".ProfileManagement"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfile"
+            android:exported="false" />
+        <activity
+            android:name=".Home"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
