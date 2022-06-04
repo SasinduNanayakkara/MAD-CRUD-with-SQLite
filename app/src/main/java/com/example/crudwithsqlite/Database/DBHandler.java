@@ -2,8 +2,13 @@ package com.example.crudwithsqlite.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
@@ -79,4 +84,60 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
+    public void deleteInfo(String username) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        //Define 'where' part of query
+        String selection = UserProfile.Users.COLUMN_1 + "LIKE ?";
+       //specify arguments in placeholder order.
+       String[] selectionArgs = {username};
+       //Issue SQL statement.
+        int deletedRows = db.delete(UserProfile.Users.TABLE_NAME, selection, selectionArgs);
+
+    }
+
+    public List readInfo (String username) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        //define a projection that specifies which columns from the database
+        String[] projection = {
+                BaseColumns._ID,
+                UserProfile.Users.COLUMN_1,
+                UserProfile.Users.COLUMN_2,
+                UserProfile.Users.COLUMN_3,
+                UserProfile.Users.COLUMN_4,
+        };
+
+        String selection = UserProfile.Users.COLUMN_1 + " LIKE ?";
+        String[] selectionArgs = {username};
+
+        String sortOrder = UserProfile.Users.COLUMN_1 + "ACS";
+
+        Cursor cursor = db.query(
+                UserProfile.Users.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                sortOrder
+        );
+
+        List userInfo = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            String user = cursor.getString(cursor.getColumnIndexOrThrow(UserProfile.Users.COLUMN_1));
+            String dob = cursor.getString(cursor.getColumnIndexOrThrow(UserProfile.Users.COLUMN_2));
+            String password = cursor.getString(cursor.getColumnIndexOrThrow(UserProfile.Users.COLUMN_3));
+            String gender = cursor.getString(cursor.getColumnIndexOrThrow(UserProfile.Users.COLUMN_4));
+
+            userInfo.add(user);
+            userInfo.add(dob);
+            userInfo.add(password);
+            userInfo.add(gender);
+
+        }
+        cursor.close();
+        return userInfo;
+
+    }
 }
