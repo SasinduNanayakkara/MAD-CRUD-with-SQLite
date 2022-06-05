@@ -38,7 +38,7 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DBHandler dbHandler = new DBHandler(getApplicationContext());
-                List user = dbHandler.readInfo(username.getText().toString());
+                List user = dbHandler.readAllInfo(username.getText().toString());
 
                 if (user.isEmpty()) {
                     Toast.makeText(EditProfile.this, "No user", Toast.LENGTH_SHORT).show();
@@ -88,6 +88,12 @@ public class EditProfile extends AppCompatActivity {
                 dbHandler.deleteInfo(username.getText().toString());
 
                 Toast.makeText(EditProfile.this, "User deleted successfully", Toast.LENGTH_SHORT).show();
+
+                username.setText(null);
+                dob.setText(null);
+                password.setText(null);
+                male.setChecked(false);
+                female.setChecked(false);
             }
         });
     }
