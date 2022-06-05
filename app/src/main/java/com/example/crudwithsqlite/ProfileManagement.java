@@ -56,6 +56,14 @@ public class ProfileManagement extends AppCompatActivity {
                 Toast.makeText(ProfileManagement.this, "User Added successfully user ID : " + newID, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getApplicationContext(), EditProfile.class);
+                startActivity(intent);
+                username.setText(null);
+                dob.setText(null);
+                password.setText(null);
+                male.setChecked(true);
+                female.setChecked(false);
+
+
             }
         });
     }
