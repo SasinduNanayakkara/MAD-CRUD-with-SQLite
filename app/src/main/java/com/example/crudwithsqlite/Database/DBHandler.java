@@ -96,7 +96,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
-    public List readInfo (String username) {
+    public List readAllInfo (String username) {
 
         SQLiteDatabase db = getReadableDatabase();
         //define a projection that specifies which columns from the database
@@ -116,8 +116,8 @@ public class DBHandler extends SQLiteOpenHelper {
         Cursor cursor = db.query(
                 UserProfile.Users.TABLE_NAME,
                 projection,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 null,
                 null,
                 sortOrder
@@ -139,5 +139,44 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.close();
         return userInfo;
 
+    }
+
+    public boolean loginUser (String username, String password) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String[] projection = {
+                BaseColumns._ID,
+                UserProfile.Users.COLUMN_1,
+                UserProfile.Users.COLUMN_3
+        };
+
+        String selection = UserProfile.Users.COLUMN_1 + " = ? AND " + UserProfile.Users.COLUMN_3 + " = ?";
+        String[] selectionArgs = {username, password};
+
+        String sortOrder = UserProfile.Users.COLUMN_1 + "ACS";
+
+        Cursor cursor = db.query(
+                UserProfile.Users.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+
+        List validUser = new ArrayList();
+
+        while (cursor.moveToNext()) {
+            String user = cursor.getString(cursor.getColumnIndexOrThrow(UserProfile.Users.COLUMN_1));
+        }
+        cursor.close();
+
+        if (validUser.isEmpty()) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }
